@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE LAST STAND – Content Roadmap</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+:root{--black:#080808;--white:#f5f0e8;--red:#e63312;--gold:#c9a84c;--grey:#1a1a1a;--grey2:#2a2a2a;--dim:#888;--green:#27ae60;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
+.bar{position:sticky;top:0;z-index:300;display:flex;align-items:center;gap:10px;padding:8px 28px;background:#050505;border-bottom:1px solid #1a1a1a;box-shadow:0 2px 12px rgba(0,0,0,.6);}
+.tog-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;transition:opacity .15s;}
+.tog-wrap:hover{opacity:.8;}
+.pill{width:40px;height:21px;background:#222;border-radius:10px;border:1px solid #333;position:relative;transition:background .2s;}
+.pill::after{content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#555;transition:transform .2s,background .2s;}
+body.ed .pill{background:var(--green);}
+body.ed .pill::after{transform:translateX(19px);background:#fff;}
+.tog-lbl{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--dim);transition:color .2s;}
+body.ed .tog-lbl{color:var(--green);}
+.sep{width:1px;height:18px;background:#222;margin:0 3px;}
+.bbtn{padding:5px 13px;border:1px solid #333;background:transparent;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);cursor:pointer;border-radius:2px;transition:all .15s;display:none;align-items:center;gap:5px;text-transform:uppercase;}
+.bbtn:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px);}
+.bbtn.danger:hover{border-color:var(--red);color:var(--red);}
+.bbtn.primary{background:var(--green);color:#000;border-color:var(--green);}
+.bbtn.primary:hover{background:#2ecc71;transform:translateY(-1px);}
+body.ed .bbtn{display:inline-flex;}
+.bstat{margin-left:auto;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--dim);transition:color .2s;}
+body.ed .bstat{color:var(--green);}
+header{position:relative;padding:44px 28px 32px;border-bottom:1px solid #1a1a1a;overflow:hidden;}
+header::before{content:'TLS';position:absolute;right:-8px;top:-16px;font-family:'Bebas Neue',sans-serif;font-size:220px;color:rgba(255,255,255,.02);pointer-events:none;line-height:1;}
+.htag{font-family:'Space Mono',monospace;font-size:9px;color:var(--red);letter-spacing:4px;margin-bottom:9px;text-transform:uppercase;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6.5vw,84px);line-height:.92;letter-spacing:2px;}
+h1 span{color:var(--red);}
+.hmeta{margin-top:13px;display:flex;gap:22px;flex-wrap:wrap;font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:2px;}
+.hmeta strong{color:var(--gold);}
+.legend{display:flex;flex-wrap:wrap;gap:9px;padding:12px 28px;background:#0b0b0b;border-bottom:1px solid #181818;}
+.li{display:flex;align-items:center;gap:6px;font-size:10px;font-family:'Space Mono',monospace;color:var(--dim);letter-spacing:.5px;}
+.ld{width:7px;height:7px;border-radius:1px;}
+.fk{display:flex;flex-wrap:wrap;border-bottom:2px solid #181818;background:#080808;}
+.fki{display:flex;align-items:center;gap:7px;padding:8px 16px;border-right:1px solid #141414;font-family:'Space Mono',monospace;font-size:8px;}
+.fkb{padding:2px 7px;border-radius:2px;font-size:7px;font-weight:700;letter-spacing:1px;}
+.fv{background:#0d2233;color:#5ab4d8;border:1px solid #1a4a66;}
+.fh{background:#1a0d33;color:#b45ad8;border:1px solid #3a1a66;}
+.fl{background:#0d2a0d;color:#5ad85a;border:1px solid #1a661a;}
+.fs{background:#2a1a0d;color:#d8a05a;border:1px solid #66331a;}
+.fkd{color:#444;font-size:8px;}
+.tlbar{display:flex;padding:0 28px;overflow-x:auto;scrollbar-width:none;}
+.tlbar::-webkit-scrollbar{display:none;}
+.tlw{flex:1;min-width:70px;padding:8px 4px;text-align:center;border-right:1px solid #1a1a1a;}
+.tlw:last-child{border-right:none;}
+.tlwl{font-family:'Space Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:.8px;margin-bottom:4px;outline:none;border:none;background:transparent;text-align:center;width:100%;cursor:default;transition:color .15s;}
+body.ed .tlwl{cursor:text;color:var(--green);}
+body.ed .tlwl:hover{color:var(--white);}
+body.ed .tlwl:focus{color:var(--white);text-decoration:underline;}
+.tlb{height:4px;border-radius:2px;margin-bottom:2px;}
+.linesep{height:1px;background:linear-gradient(90deg,transparent,#282828,transparent);margin:0 28px;}
+.phase{padding:0 28px;}
+.ph{display:flex;align-items:center;gap:16px;padding:24px 0 14px;border-top:2px solid var(--grey2);position:sticky;top:50px;background:var(--black);z-index:90;}
+.pnum{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:1;color:var(--grey2);width:66px;flex-shrink:0;}
+.pinfo h2{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;line-height:1;}
+.pwk{font-family:'Space Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2.5px;margin-top:3px;}
+.pgoal{margin-left:auto;font-size:10px;color:var(--dim);text-align:right;max-width:170px;line-height:1.4;}
+.add-row{padding:6px 0 18px;}
+.add-btn{display:none;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);border:2px dashed rgba(39,174,96,.4);padding:10px 18px;border-radius:3px;cursor:pointer;background:transparent;transition:all .2s;text-transform:uppercase;}
+.add-btn:hover{background:rgba(39,174,96,.08);border-color:var(--green);box-shadow:0 4px 12px rgba(39,174,96,.15);transform:translateY(-2px);}
+body.ed .add-btn{display:inline-flex;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;margin-bottom:10px;}
+.card{background:var(--grey);padding:18px;border-top:3px solid var(--grey2);border-radius:3px;position:relative;transition:transform .2s,border-color .2s,box-shadow .2s;cursor:default;}
+.card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.5);}
+body.ed .card{cursor:grab;}
+body.ed .card:active{cursor:grabbing;}
+body.ed .card.dragging{opacity:.5;transform:scale(.95);}
+body.ed .card.drag-over{border-top-color:var(--green);box-shadow:0 0 20px rgba(39,174,96,.4);}
+.phase-1 .card:hover{border-top-color:var(--gold);}
+.phase-2 .card:hover{border-top-color:#4a90d9;}
+.phase-3 .card:hover{border-top-color:#8e44ad;}
+.phase-4 .card:hover{border-top-color:var(--red);}
+.phase-5 .card:hover{border-top-color:#27ae60;}
+.phase-6 .card:hover{border-top-color:#e67e22;}
+.phase-7 .card:hover{border-top-color:#9b59b6;}
+.phase-8 .card:hover{border-top-color:var(--red);}
+body.ed .card::before{content:'⋮⋮';position:absolute;top:10px;left:8px;font-size:16px;color:#333;letter-spacing:-2px;pointer-events:none;}
+.cdel{display:none;position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:2px;background:rgba(230,51,18,.12);border:1px solid rgba(230,51,18,.25);color:var(--red);font-size:18px;cursor:pointer;align-items:center;justify-content:center;transition:all .15s;line-height:1;font-weight:300;}
+.cdel:hover{background:rgba(230,51,18,.35);transform:scale(1.08);}
+body.ed .cdel{display:flex;}
+.ef{outline:none;border-radius:2px;transition:background .15s,box-shadow .15s;cursor:default;}
+body.ed .ef{cursor:text;background:rgba(39,174,96,.04);box-shadow:0 0 0 1px rgba(39,174,96,.2);padding:2px 4px;margin:-2px -4px;}
+body.ed .ef:hover{background:rgba(39,174,96,.08);box-shadow:0 0 0 1px rgba(39,174,96,.4);}
+body.ed .ef:focus{background:rgba(39,174,96,.12);box-shadow:0 0 0 2px var(--green);}
+.cn{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:2px;margin-bottom:5px;}
+.ct{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;line-height:1.1;margin-bottom:5px;}
+.cpilar{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:9px;}
+.dur{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.durbox{background:#0f0f0f;border:1px solid #282828;padding:3px 8px;font-family:'Space Mono',monospace;font-size:10px;color:var(--white);font-weight:700;border-radius:2px;}
+.durlbl{font-size:9px;color:var(--dim);}
+.cd{font-size:11px;color:#aaa;line-height:1.5;margin-bottom:9px;border-left:2px solid #282828;padding-left:9px;}
+.sl{font-family:'Space Mono',monospace;font-size:8px;color:#3a3a3a;letter-spacing:2px;margin:9px 0 4px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.sl::before{content:'';width:12px;height:1px;background:#282828;}
+.plats{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px;}
+.pb{font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1.2px;padding:3px 7px;border-radius:2px;border:none;transition:all .15s;text-transform:uppercase;}
+.pb-ig{background:#833ab4;color:#fff;}
+.pb-tk{background:#0f0f0f;color:#fff;border:1px solid #2a2a2a;}
+.pb-yt{background:#ff0000;color:#fff;}
+.pb-web{background:var(--gold);color:#000;}
+.pb-live{background:var(--red);color:#fff;}
+.pb-other{background:#2a2a2a;color:#bbb;}
+body.ed .pb{cursor:pointer;}
+body.ed .pb:hover{transform:scale(1.06);box-shadow:0 2px 8px rgba(0,0,0,.5);}
+.pb.off{opacity:.15;text-decoration:line-through;}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px;}
+.tag{display:inline-flex;align-items:center;gap:3px;font-family:'Space Mono',monospace;font-size:8px;border:1px solid;padding:2px 7px;border-radius:2px;font-weight:700;transition:all .15s;position:relative;}
+.tag-v{color:#5ab4d8;border-color:#1a4a66;background:rgba(13,34,51,.8);}
+.tag-h{color:#b45ad8;border-color:#3a1a66;background:rgba(26,13,51,.8);}
+.tag-l{color:#5ad85a;border-color:#1a661a;background:rgba(13,42,13,.8);}
+.tag-s{color:#d8a05a;border-color:#66331a;background:rgba(42,26,13,.8);}
+.tag-grid{color:#27ae60;border-color:#27ae60;background:rgba(39,174,96,.09);}
+.tag-pin{color:var(--gold);border-color:var(--gold);background:rgba(201,168,76,.09);}
+.tag-story{color:#888;border-color:#444;background:rgba(100,100,100,.09);}
+.tag.off{opacity:.14;text-decoration:line-through;}
+body.ed .tag{cursor:pointer;padding-right:20px;}
+body.ed .tag:hover{opacity:.7;transform:scale(1.04);}
+body.ed .tag::after{content:'×';position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:11px;opacity:.6;}
+body.ed .tag.off::after{content:'+';}
+.addin{display:none;align-items:center;gap:3px;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1px;color:var(--green);border:1px dashed rgba(39,174,96,.35);padding:2px 6px;border-radius:2px;cursor:pointer;background:transparent;transition:all .15s;text-transform:uppercase;}
+.addin:hover{background:rgba(39,174,96,.1);border-color:var(--green);transform:scale(1.03);}
+body.ed .addin{display:inline-flex;}
+.rec{grid-column:1/-1;background:#0f0f0f;padding:18px;border-left:3px solid #333;border-radius:3px;}
+.recgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px;margin-top:11px;}
+.rtl{font-family:'Space Mono',monospace;font-size:9px;margin-bottom:4px;font-weight:700;}
+.rd{font-size:11px;color:#aaa;line-height:1.4;}
+.rf{font-family:'Space Mono',monospace;font-size:8px;color:#777;margin-top:5px;}
+.freq{padding:30px 28px;border-top:2px solid #1a1a1a;}
+.fttl{font-family:'Bebas Neue',sans-serif;font-size:23px;letter-spacing:2px;margin-bottom:15px;color:var(--gold);}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+.fc{background:var(--grey);padding:13px;border-radius:2px;}
+.fp{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;margin-bottom:6px;}
+.fd{font-size:11px;color:#aaa;line-height:1.6;}
+.fd b{color:var(--white);}
+.seq{padding:0 28px 50px;}
+.sttl{font-family:'Bebas Neue',sans-serif;font-size:23px;letter-spacing:2px;margin-bottom:15px;padding-top:30px;border-top:2px solid #1a1a1a;color:var(--red);}
+.over{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999;align-items:center;justify-content:center;}
+.over.open{display:flex;}
+.modal{background:#111;border:1px solid #2a2a2a;border-top:3px solid var(--green);padding:24px;width:min(520px,94vw);border-radius:3px;box-shadow:0 20px 60px rgba(0,0,0,.8);}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:2px;margin-bottom:16px;}
+.mf{margin-bottom:12px;}
+.ml{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:2px;margin-bottom:5px;text-transform:uppercase;}
+.mi,.ms{width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:var(--white);padding:9px 11px;font-family:'Space Mono',monospace;font-size:10px;border-radius:2px;outline:none;transition:border-color .15s;}
+.mi:focus,.ms:focus{border-color:var(--green);}
+.ms{cursor:pointer;}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mactions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end;}
+.mbtn{padding:8px 16px;border:none;border-radius:2px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;transition:all .15s;}
+.mbtn:hover{transform:translateY(-2px);}
+.mbtn.ok{background:var(--green);color:#000;}
+.mbtn.ok:hover{background:#2ecc71;}
+.mbtn.cancel{background:transparent;color:var(--dim);border:1px solid #333;}
+.mbtn.cancel:hover{border-color:#555;color:#aaa;}
+.picker{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.chip{font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;padding:5px 10px;border-radius:2px;cursor:pointer;border:2px solid transparent;opacity:.4;transition:all .15s;text-transform:uppercase;}
+.chip:hover{opacity:.7;transform:scale(1.04);}
+.chip.sel{opacity:1;border-color:#fff;box-shadow:0 2px 8px rgba(255,255,255,.2);}
+.toast{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--green);color:#000;padding:10px 18px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;border-radius:3px;opacity:0;transform:translateY(10px);transition:opacity .2s,transform .2s;pointer-events:none;box-shadow:0 4px 20px rgba(39,174,96,.5);}
+.toast.show{opacity:1;transform:translateY(0);}
+@media(max-width:700px){header,.phase,.freq,.seq,.bar{padding-left:16px;padding-right:16px;}.legend,.fk,.tlbar{padding-left:16px;padding-right:16px;}.pgoal{display:none;}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="tog-wrap" onclick="toggleEdit()"><div class="pill"></div><span class="tog-lbl">EDIT</span></div>
+  <div class="sep"></div>
+  <button class="bbtn primary" onclick="save()">💾 SAVE</button>
+  <button class="bbtn danger" onclick="reset()">↺ RESET</button>
+  <span class="bstat" id="stat">VIEW ONLY — TOGGLE TO EDIT</span>
+</div>
+<header>
+  <div class="htag">// CONTENT ROADMAP – MARCH TO JULY 2025</div>
+  <h1>THE LAST <span>STAND</span><br>CONTENT MAP</h1>
+  <div class="hmeta"><span><strong>DURATION</strong> 18 WEEKS · 4 MONTHS</span><span><strong>TIMELINE</strong> 31 MARCH → 31 JULY</span><span><strong>PILLARS</strong> ARCHIVE · FRESH · PR · EDUCATION</span></div>
+</header>
+<div class="legend">
+  <div class="li"><div class="ld" style="background:var(--gold)"></div>ARCHIVE</div>
+  <div class="li"><div class="ld" style="background:var(--red)"></div>FRESH</div>
+  <div class="li"><div class="ld" style="background:#4a90d9"></div>PR</div>
+  <div class="li"><div class="ld" style="background:#8e44ad"></div>EDUCATION</div>
+  <div class="li"><div class="ld" style="background:#27ae60"></div>TRIALS</div>
+  <div class="li"><div class="ld" style="background:#9b59b6"></div>ROAD</div>
+  <div class="li"><div class="ld" style="background:#e63312"></div>FINAL</div>
+</div>
+<div class="fk">
+  <div class="fki"><span class="fkb fv">VERTICAL 9:16</span><span class="fkd">IG · TikTok · YT Shorts</span></div>
+  <div class="fki"><span class="fkb fh">LANDSCAPE 16:9</span><span class="fkd">YouTube long-form</span></div>
+  <div class="fki"><span class="fkb fl">LOOP / GIF</span><span class="fkd">Teaser</span></div>
+  <div class="fki"><span class="fkb fs">SQUARE 1:1</span><span class="fkd">IG Carousel</span></div>
+</div>
+<div class="tlbar" id="timeline"></div>
+<div class="linesep"></div>
+<div id="root"></div>
+<div class="freq">
+  <div class="fttl">POSTING FREQUENCY BY PLATFORM</div>
+  <div class="fgrid">
+    <div class="fc"><div class="fp" style="color:#833ab4">📸 INSTAGRAM</div><div class="fd ef" contenteditable="false"><b>Reels:</b> max 3/week<br><b>Stories:</b> daily<br><b>Carousel:</b> Draft Reveal only<br><b>Grid pinned:</b> Origin · LDN vs NYC · Final<br><b>Format:</b> vertical 9:16 always</div></div>
+    <div class="fc"><div class="fp" style="color:#fff">🎵 TIKTOK</div><div class="fd ef" contenteditable="false"><b>Trials:</b> 1–2/day<br><b>Other:</b> 1/day<br><b>Style:</b> banter, skills, immediate<br><b>Goals:</b> real-time on match day<br><b>Format:</b> vertical 9:16 always</div></div>
+    <div class="fc"><div class="fp" style="color:#ff0000">▶️ YOUTUBE</div><div class="fd ef" contenteditable="false"><b>Shorts:</b> 9:16 — same as IG<br><b>Extended:</b> 2–4 min 16:9<br><b>Episodes:</b> 6–8 min 16:9<br><b>Road to Final:</b> 8–12 min 16:9<br><b>Rule:</b> over 60sec = 16:9</div></div>
+    <div class="fc"><div class="fp" style="color:var(--gold)">🌐 WEBSITE</div><div class="fd ef" contenteditable="false"><b>Origin:</b> video embed<br><b>Trials reg:</b> always live<br><b>Press:</b> updated with PR<br><b>Tutorials:</b> What is TLS embedded</div></div>
+  </div>
+</div>
+<div class="over" id="over">
+  <div class="modal"><h3 id="mtitle">ADD CARD</h3><div id="mbody"></div><div class="mactions"><button class="mbtn cancel" onclick="closeModal()">CANCEL</button><button class="mbtn ok" onclick="confirmModal()">ADD CARD</button></div></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const STORE='tls_v9';
+const TL=['24 MAR','31 MAR','7 APR','14 APR','21 APR','28 APR','5 MAY','12 MAY','19 MAY','26 MAY','2 JUN','9 JUN','16 JUN','23 JUN','30 JUN','7 JUL','14 JUL','21 JUL','28 JUL'];
+const TLCOL=['#333','#c9a84c','#c9a84c','#4a90d9','#8e44ad','#e63312','#e63312','#27ae60','#27ae60','#27ae60','#27ae60','#27ae60','#e67e22','#9b59b6','#9b59b6','#9b59b6','#9b59b6','#9b59b6','#e63312'];
+const PM=[
+  {id:'ph0',n:'00',t:'FOUNDATION',w:'WEEK 0 · BEFORE LAUNCH',c:'#888',g:'Build infrastructure before publishing.'},
+  {id:'ph1',n:'01',t:'TEASER + ARCHIVE',w:'WEEKS 1–2 · ARCHIVE PILLAR',c:'#c9a84c',g:'Re-capture attention. Nostalgia. [31 MARCH MILESTONE]'},
+  {id:'ph2',n:'02',t:'ORIGIN STORY',w:'WEEK 3 · FRESH + PR',c:'#4a90d9',g:'Emotional positioning. Who we are. Why now.'},
+  {id:'ph3',n:'03',t:'WHAT IS TLS',w:'WEEK 4 · EDUCATION',c:'#8e44ad',g:'Easy tutorials: rules, format, who can play.'},
+  {id:'ph4',n:'04',t:'LONDON VS NYC',w:'WEEKS 5–6 · FRESH + PR',c:'#e63312',g:'Official announcement. City identities.'},
+  {id:'ph5',n:'05',t:'TRIALS',w:'WEEKS 7–11 · TRIALS',c:'#27ae60',g:'Document process. Street culture. Aspiration.'},
+  {id:'ph6',n:'06',t:'FINALIST REVEAL',w:'WEEK 12 · ANNOUNCEMENT',c:'#e67e22',g:'Draft Day energy. Tournament takes shape.'},
+  {id:'ph7',n:'07',t:'ROAD TO FINAL',w:'WEEKS 13–17 · RIVALRY',c:'#9b59b6',g:'Tension. Personality. London–NYC rivalry.'},
+  {id:'ph8',n:'08',t:'FINAL WEEK',w:'WEEK 18 · GREATNESS',c:'#e63312',g:'Everything converges. [31 JULY MILESTONE]'},
+];
+const DEF={ph0:[{id:'a01',num:'ASSET 01',title:'TLS WEBSITE',pillar:'⚙️ INFRASTRUCTURE',dur:[{v:'',l:''}],desc:'About · Origin embed · Trials reg · LDN vs NYC · Press · Tutorials',plats:[{c:'pb-web',l:'WEBSITE',on:1}],fmts:[{c:'tag-v',l:'🌐 WEB',on:1}],stats:[]},{id:'a02',num:'ASSET 02',title:'INSTAGRAM PROFILE',pillar:'⚙️ INFRASTRUCTURE',dur:[{v:'',l:''}],desc:'Bio · Link · Highlights: Legacy · London · NYC · Trials · Road to Final',plats:[{c:'pb-ig',l:'INSTAGRAM',on:1}],fmts:[{c:'tag-s',l:'📱 PROFILE',on:1}],stats:[]}],ph1:[{id:'c01',num:'C-01',title:'TEASER LOOP',pillar:'📦 ARCHIVE',pc:'#c9a84c',dur:[{v:'10 SEC',l:'loop'}],desc:'Black screen → crowd → Statue of Liberty → Big Ben → glitch → "The Last Stand" → loop',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1},{c:'tag-l',l:'🔁 LOOP',on:1}],stats:[{c:'tag-pin',l:'📌 PINNED',on:1}]},{id:'c02',num:'C-02',title:'ARCHIVE #1 — ENERGY',pillar:'📦 ARCHIVE',pc:'#c9a84c',dur:[{v:'30 SEC',l:''}],desc:'Crowd scream → goal → skills → battles → "You remember this" → Coming Soon',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]},{id:'c03',num:'C-03',title:'ARCHIVE #2 — MOVEMENT',pillar:'📦 ARCHIVE',pc:'#c9a84c',dur:[{v:'35 SEC',l:''}],desc:'Interview → kids → huddle → "More than football" → Coming Soon',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]},{id:'c04',num:'C-04',title:'ARCHIVE #3 — LEGACY',pillar:'📦 ARCHIVE',pc:'#c9a84c',dur:[{v:'30 SEC',l:''}],desc:'Crowd wide → trophy → iconic moments → "You thought it ended" → Coming Soon',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]}],ph2:[{id:'c05',num:'C-05',title:'ORIGIN FILM',pillar:'🎬 FRESH',pc:'#4a90d9',dur:[{v:'60 SEC',l:'IG/TK'},{v:'4 MIN',l:'YT'}],desc:'The problem → why TLS → archive → vision → Gundeep closing. Consider media collab.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-yt',l:'YT FULL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-web',l:'WEBSITE',on:1}],fmts:[{c:'tag-v',l:'📱 9:16 — IG/TK',on:1},{c:'tag-h',l:'🖥️ 16:9 — YT',on:1}],stats:[{c:'tag-pin',l:'📌 PINNED',on:1}]},{id:'c06',num:'C-06',title:'FOUNDER INTRO — GUNDEEP',pillar:'🎬 FRESH',pc:'#4a90d9',dur:[{v:'30 SEC',l:''}],desc:'Gundeep direct-to-camera. "Why now. Why NYC." Raw IG Reel vibes.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]}],ph3:[{id:'c07',num:'C-07',title:'WHAT IS TLS?',pillar:'📚 EDUCATION',pc:'#8e44ad',dur:[{v:'45 SEC',l:''}],desc:'Easy tutorial: What is TLS? London vs NYC street football. Simple, no jargon.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1},{c:'pb-web',l:'WEBSITE',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-pin',l:'📌 TEMP',on:1}]},{id:'c08',num:'C-08',title:'WHO CAN PLAY?',pillar:'📚 EDUCATION',pc:'#8e44ad',dur:[{v:'40 SEC',l:''}],desc:'Easy tutorial: Anyone. Format. Team size. How to register. Accessible for all.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1},{c:'pb-web',l:'WEBSITE',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]},{id:'c09',num:'C-09',title:'HOW IT WORKS',pillar:'📚 EDUCATION',pc:'#8e44ad',dur:[{v:'45 SEC',l:''}],desc:'Easy tutorial: Tournament format. Trials → teams → matches → final. Simple language.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1},{c:'pb-web',l:'WEBSITE',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]}],ph4:[{id:'c10',num:'C-10',title:'LONDON FILM',pillar:'🎬 FRESH',pc:'#e63312',dur:[{v:'40 SEC',l:''}],desc:'London street shots → local talent → court energy → no voiceover. Pure vibe.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]},{id:'c11',num:'C-11',title:'NEW YORK FILM',pillar:'🎬 FRESH',pc:'#e63312',dur:[{v:'40 SEC',l:''}],desc:'NYC street shots → local talent → court energy → no voiceover. Drop both within 48hrs.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]},{id:'c12',num:'C-12',title:'PR ANNOUNCEMENT',pillar:'📡 PR',pc:'#4a90d9',dur:[{v:'45 SEC',l:'IG/TK'},{v:'2 MIN',l:'YT'}],desc:'Sky/BBC clip → city shots → archive → LDN vs NYC reveal. Gundeep announces on major platform.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-yt',l:'YT',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16 — IG/TK',on:1},{c:'tag-h',l:'🖥️ 16:9 — YT',on:1}],stats:[{c:'tag-pin',l:'📌 PINNED',on:1}]},{id:'c13',num:'C-13',title:'REACTION COMP',pillar:'📡 PR',pc:'#4a90d9',dur:[{v:'30–45 SEC',l:''}],desc:'Influencers, footballers, artists reacting to LDN/NYC films. Clipped compilation.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 IF STRONG',on:1}]}],ph5:[{id:'c14',num:'C-14',title:'TRIALS CALL OUT (LEGACY)',pillar:'🟢 TRIALS',pc:'#27ae60',dur:[{v:'45 SEC',l:''}],desc:'3 past players success stories → what TLS did for them → CTA for trials.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1},{c:'pb-yt',l:'YT SHORTS',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-pin',l:'📌 TEMP',on:1}]},{id:'c15',num:'C-15',title:'NYC CALL OUT',pillar:'🟢 TRIALS',pc:'#27ae60',dur:[{v:'45 SEC',l:''}],desc:'Local NYC talent calling for trials. Same structure as C-14. Street energy.',plats:[{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]}],ph6:[{id:'c16',num:'C-16',title:'DRAFT REVEAL',pillar:'🏆 ANNOUNCEMENT',pc:'#e67e22',dur:[{v:'LIVE',l:'YT'},{v:'60 SEC',l:'IG'}],desc:'Split-screen LDN vs NYC. DJ/MC intros teams. Street poster animations. Face-off visual.',plats:[{c:'pb-live',l:'LIVE YT',on:1},{c:'pb-ig',l:'IG REEL',on:1},{c:'pb-ig',l:'IG CAROUSEL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-h',l:'🖥️ 16:9 — LIVE',on:1},{c:'tag-v',l:'📱 9:16 — IG',on:1},{c:'tag-s',l:'🃏 1:1 — CAROUSEL',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]}],ph7:[],ph8:[{id:'c17',num:'C-17',title:'FINAL TRAILER',pillar:'🔥 FINAL',pc:'#e63312',dur:[{v:'60 SEC',l:'cinematic'}],desc:'Short film introducing finalists. 18-week arc condensed. Maximum cinematic quality.',plats:[{c:'pb-ig',l:'IG PINNED',on:1},{c:'pb-yt',l:'YT FULL',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16 — IG/TK',on:1},{c:'tag-h',l:'🖥️ 16:9 — YT',on:1}],stats:[{c:'tag-pin',l:'📌 PINNED',on:1}]},{id:'cmd',num:'MATCH DAY',title:'LIVE COVERAGE',pillar:'🔴 LIVE',pc:'#e63312',dur:[{v:'REAL TIME',l:''}],desc:'IG Stories live → 2 goal Reels within 30 min → TikTok immediate. Speed over perfection.',plats:[{c:'pb-ig',l:'IG STORIES',on:1},{c:'pb-ig',l:'IG REEL ×2',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16',on:1},{c:'tag-v',l:'⚡ REAL-TIME',on:1}],stats:[]},{id:'cpf',num:'POST FINAL',title:'TROPHY + RECAP',pillar:'🏆 LEGACY',pc:'#e63312',dur:[{v:'60 SEC',l:'trophy'},{v:'15 MIN',l:'YT'}],desc:'Trophy Reel → Emotional recap → YT 15 min film. Enters archive for next cycle. [31 JULY MILESTONE]',plats:[{c:'pb-ig',l:'IG REEL ×2',on:1},{c:'pb-yt',l:'YT FILM',on:1},{c:'pb-tk',l:'TIKTOK',on:1}],fmts:[{c:'tag-v',l:'📱 9:16 — IG/TK',on:1},{c:'tag-h',l:'🖥️ 16:9 — YT',on:1}],stats:[{c:'tag-grid',l:'🟢 GRID',on:1}]}]};
+const REC={ph5:{co:'#27ae60',ttl:'WEEKLY TRIALS CONTENT — W7–11',sub:'RECURRING · 5 WEEKS',types:[{l:'TRIAL HIGHLIGHTS',d:'Skills, goals, viral moments. Fast-paced. Pure street energy.',f:'FREQ: 1–2/day TK · max 3/wk IG',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'MIC\'D UP',d:'Player mic\'d up. Raw reactions, banter. Authenticity.',f:'FREQ: 1/week',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'PLAYER DOCS',d:'Mini-doc: journeys, neighbourhood pride. Social + YT.',f:'FREQ: 1/week',fmts:['tag-v:📱 9:16 — IG/TK','tag-h:🖥️ 16:9 — YT 5–8min'],plats:['pb-ig:IG','pb-yt:YT','pb-tk:TK']},{l:'WEEKLY RECAP',d:'Full recap. Episode format. Street style, not TV professional.',f:'FREQ: 1/week',fmts:['tag-h:🖥️ 16:9 — 6–8min'],plats:['pb-yt:YT ONLY']},{l:'DAILY STORIES',d:'Behind scenes: arrivals, warm-up, banter, ratings. Raw.',f:'FREQ: daily → highlight',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG STORIES']},{l:'STREET SWAP',d:'Pair LDN player with NYC. Try food, slang, skills. WhatsApp video (Meta collab).',f:'FREQ: 1–2 total',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'STREET STYLE',d:'Borough fashion - players show streetwear. Football + style. WhatsApp (Meta collab).',f:'FREQ: 1/borough',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'SCAVENGER HUNT',d:'Partner with iconic courts - digital map/clues. Teams film skill clips. Gamifies signup.',f:'FREQ: ongoing',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG STORIES','pb-tk:TK','pb-web:WEBSITE']},{l:'FOOTBALLERS REACT',d:'Pro footballers react to trial content. Adds credibility.',f:'FREQ: 1–2/week',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'GUNDEEP RECURRING',d:'Gundeep in press/tv/social throughout trials. Recurring visibility → 31 July milestone.',f:'FREQ: 1–2/week',fmts:['tag-v:📱 9:16 — social','tag-h:🖥️ 16:9 — TV'],plats:['pb-ig:IG','pb-yt:YT','pb-other:TV/PRESS']}]},ph7:{co:'#9b59b6',ttl:'WEEKLY ROAD TO FINAL — W13–17',sub:'RECURRING · 5 WEEKS',types:[{l:'RIVALRY BANTER',d:'LDN vs NYC players describing each other. Respectful but sharp. Cut between cities.',f:'FREQ: 1–2/week',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'BOROUGH ANTHEMS',d:'Collab with local musicians. Existing tracks. Cinematic edits paired with footage.',f:'FREQ: 1/borough',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'PLAYER SPOTLIGHT',d:'Finalist stories. Character profiles. Build emotional investment before final.',f:'FREQ: 1/week',fmts:['tag-v:📱 9:16 — IG/TK','tag-h:🖥️ 16:9 — YT 5–8min'],plats:['pb-ig:IG','pb-yt:YT']},{l:'RTF EPISODE',d:'YT weekly. Matches, backstory, narrative. Docuseries. Street vibe, not TV broadcast.',f:'FREQ: 1/week',fmts:['tag-h:🖥️ 16:9 — 8–12min'],plats:['pb-yt:YT ONLY']},{l:'MATCH HYPE',d:'Pre-match hype. Trash talk, banter, predictions. Street style, no professional stats.',f:'FREQ: before each match',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'PERSONALITY REEL',d:'Banter, humour, culture. Not just football. Streetwear, lifestyle.',f:'FREQ: 1/week',fmts:['tag-v:📱 9:16'],plats:['pb-ig:IG','pb-tk:TK']},{l:'GUNDEEP RECURRING',d:'Gundeep continues press/tv/social as tournament builds → 31 July milestone.',f:'FREQ: 1–2/week',fmts:['tag-v:📱 9:16 — social','tag-h:🖥️ 16:9 — TV'],plats:['pb-ig:IG','pb-yt:YT','pb-other:TV/PRESS']}]}};
+let ed=false,cards={},cb=null,drag=null,newPh=null,timeline=[];
+function load(){try{const s=localStorage.getItem(STORE);if(s){const d=JSON.parse(s);cards=d.cards||{};timeline=d.timeline||[...TL];}else{reset(true);}}catch(e){reset(true);}}
+function reset(silent){if(!silent&&!confirm('Reset all to default?'))return;cards={};for(const p in DEF)cards[p]=DEF[p].map(c=>JSON.parse(JSON.stringify(c)));timeline=[...TL];render();if(!silent)toast('RESET TO DEFAULT');}
+function render(){const r=document.getElementById('root');r.innerHTML='';PM.forEach((pm,pi)=>{const w=document.createElement('div');w.className=`phase phase-${pi}`;w.id=pm.id;w.innerHTML=`<div class="ph"><div class="pnum" style="color:${pm.c}22">${pm.n}</div><div class="pinfo"><h2>${pm.t}</h2><div class="pwk" style="color:${pm.c}">${pm.w}</div></div><div class="pgoal">${pm.g}</div></div>`;const g=document.createElement('div');g.className='grid';g.dataset.ph=pm.id;(cards[pm.id]||[]).forEach(c=>g.appendChild(buildCard(c,pm.id)));if(REC[pm.id])g.appendChild(buildRec(pm.id));w.appendChild(g);const arow=document.createElement('div');arow.className='add-row';const ab=document.createElement('button');ab.className='add-btn';ab.innerHTML='＋ NEW CARD';ab.onclick=()=>openWiz(pm.id);arow.appendChild(ab);w.appendChild(arow);r.appendChild(w);r.appendChild(Object.assign(document.createElement('div'),{className:'linesep'}));});renderTL();syncEdit();}
+function renderTL(){const t=document.getElementById('timeline');t.innerHTML='';timeline.forEach((d,i)=>{const w=document.createElement('div');w.className='tlw';const inp=document.createElement('input');inp.className='tlwl';inp.value=d;inp.readOnly=!ed;inp.onclick=()=>{if(ed)inp.select();};inp.onchange=()=>{timeline[i]=inp.value;};inp.onblur=()=>save();const b=document.createElement('div');b.className='tlb';b.style.background=TLCOL[i];w.appendChild(inp);w.appendChild(b);t.appendChild(w);});}
+function buildCard(c,ph){const d=document.createElement('div');d.className='card';d.dataset.id=c.id;d.dataset.ph=ph;d.draggable=ed;d.ondragstart=e=>{if(!ed)return;drag={ph,id:c.id};d.classList.add('dragging');e.dataTransfer.effectAllowed='move';};d.ondragend=()=>{d.classList.remove('dragging');drag=null;};d.ondragover=e=>{if(!ed||!drag)return;e.preventDefault();d.classList.add('drag-over');};d.ondragleave=()=>d.classList.remove('drag-over');d.ondrop=e=>{if(!ed||!drag)return;e.preventDefault();d.classList.remove('drag-over');const from=drag.ph,to=ph,fid=drag.id,tid=c.id;if(from===to&&fid===tid)return;const fc=cards[from].find(x=>x.id===fid);if(!fc)return;cards[from]=cards[from].filter(x=>x.id!==fid);const ti=cards[to].findIndex(x=>x.id===tid);if(ti!==-1)cards[to].splice(ti,0,fc);else cards[to].push(fc);render();toast('CARD MOVED');};let durH=c.dur&&c.dur.length?`<div class="dur">`+c.dur.map(x=>x.v?`<div class="durbox ef" contenteditable="false">${x.v}</div>${x.l?`<span class="durlbl ef" contenteditable="false">${x.l}</span>`:''}`:'').join('')+`</div>`:'';let plH=(c.plats||[]).map(p=>`<button class="pb ${p.c}${p.on===false?' off':''}">${p.l}</button>`).join('');let fmH=(c.fmts||[]).map(t=>`<span class="tag ${t.c}${t.on===false?' off':''}">${t.l}</span>`).join('');let stH=(c.stats||[]).map(t=>`<span class="tag ${t.c}${t.on===false?' off':''}">${t.l}</span>`).join('');d.innerHTML=`<button class="cdel" onclick="delCard('${ph}','${c.id}')">×</button><div class="cn ef" contenteditable="false">${c.num||''}</div><div class="ct ef" contenteditable="false">${c.title||''}</div><div class="cpilar ef" contenteditable="false" style="color:${c.pc||'#c9a84c'}">${c.pillar||''}</div>${durH}<div class="cd ef" contenteditable="false">${c.desc||''}</div><div class="sl">PLATFORMS</div><div class="plats">${plH}<button class="addin" onclick="openAddPlat(this)">＋ PLAT</button></div><div class="sl">FORMAT</div><div class="tags fmts">${fmH}<button class="addin" onclick="openAddTag(this,'fmts')">＋ TAG</button></div><div class="sl">STATUS</div><div class="tags stats">${stH}<button class="addin" onclick="openAddTag(this,'stats')">＋ TAG</button></div>`;d.querySelectorAll('.pb').forEach(b=>b.onclick=()=>{if(ed)b.classList.toggle('off');});d.querySelectorAll('.tags.fmts .tag').forEach(t=>t.onclick=()=>{if(ed)t.classList.toggle('off');});d.querySelectorAll('.tags.stats .tag').forEach(t=>t.onclick=()=>{if(ed)t.classList.toggle('off');});return d;}
+function buildRec(ph){const r=REC[ph];const d=document.createElement('div');d.className='rec';d.style.borderLeftColor=r.co;d.innerHTML=`<div class="cn" style="color:${r.co}">${r.sub}</div><div class="ct">${r.ttl}</div><div class="recgrid">${r.types.map(t=>`<div><div class="rtl" style="color:${r.co}">${t.l}</div><div class="rd ef" contenteditable="false">${t.d}</div><div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:3px;">${t.fmts.map(f=>{const[c,l]=f.split(':',2);return`<span class="tag ${c}">${l}</span>`;}).join('')}</div><div class="plats" style="margin-top:4px;">${t.plats.map(p=>{const[c,l]=p.split(':',2);return`<button class="pb ${c}">${l}</button>`;}).join('')}</div><div class="rf ef" contenteditable="false">${t.f}</div></div>`).join('')}</div>`;return d;}
+function toggleEdit(){ed=!ed;document.body.classList.toggle('ed',ed);document.getElementById('stat').textContent=ed?'EDIT MODE ON — DRAG · EDIT · CHANGE DATES':'VIEW ONLY — TOGGLE TO EDIT';render();toast(ed?'EDIT MODE ON':'VIEW ONLY');}
+function syncEdit(){document.querySelectorAll('.ef').forEach(e=>e.contentEditable=ed?'true':'false');}
+function delCard(ph,cid){if(!ed)return;if(!confirm('Delete?'))return;cards[ph]=(cards[ph]||[]).filter(c=>c.id!==cid);render();toast('DELETED');}
+function save(){PM.forEach(pm=>{const g=document.querySelector(`[data-ph="${pm.id}"]`);if(!g)return;g.querySelectorAll('.card').forEach(cel=>{const cid=cel.dataset.id,ph=cel.dataset.ph;let c=(cards[ph]||[]).find(x=>x.id===cid);if(!c)return;const cn=cel.querySelector('.cn');if(cn)c.num=cn.textContent;const ct=cel.querySelector('.ct');if(ct)c.title=ct.textContent;const cp=cel.querySelector('.cpilar');if(cp)c.pillar=cp.textContent;const cd=cel.querySelector('.cd');if(cd)c.desc=cd.innerHTML;const durs=cel.querySelectorAll('.durbox');const lbls=cel.querySelectorAll('.durlbl');c.dur=Array.from(durs).map((x,i)=>({v:x.textContent,l:lbls[i]?.textContent||''}));c.plats=Array.from(cel.querySelectorAll('.pb')).map(b=>({c:b.className.replace('pb ','').replace(' off','').trim(),l:b.textContent,on:!b.classList.contains('off')}));c.fmts=Array.from(cel.querySelectorAll('.tags.fmts .tag')).map(t=>({c:t.className.replace('tag ','').replace(' off','').trim(),l:t.textContent,on:!t.classList.contains('off')}));c.stats=Array.from(cel.querySelectorAll('.tags.stats .tag')).map(t=>({c:t.className.replace('tag ','').replace(' off','').trim(),l:t.textContent,on:!t.classList.contains('off')}));});});localStorage.setItem(STORE,JSON.stringify({cards,timeline}));toast('SAVED ✓');}
+let _tar=null,_ty=null;function openAddTag(btn,type){if(!ed)return;_tar=btn.closest('.tags');_ty=type;const isSt=type==='stats';document.getElementById('mtitle').textContent=isSt?'ADD STATUS':'ADD FORMAT';document.getElementById('mbody').innerHTML=`<div class="mf"><div class="ml">Label</div><input class="mi" id="tagl" placeholder="${isSt?'e.g. 🟢 GRID':'e.g. 📱 9:16'}" /></div><div class="mf"><div class="ml">Style</div><select class="ms" id="tagc">${isSt?`<option value="tag-grid">🟢 GRID</option><option value="tag-pin">📌 PINNED</option><option value="tag-story">📖 STORY</option>`:`<option value="tag-v">VERTICAL 9:16</option><option value="tag-h">LANDSCAPE 16:9</option><option value="tag-l">LOOP / GIF</option><option value="tag-s">SQUARE 1:1</option>`}</select></div>`;cb=()=>{const l=document.getElementById('tagl').value.trim();const c=document.getElementById('tagc').value;if(!l)return;const t=document.createElement('span');t.className=`tag ${c}`;t.textContent=l;t.onclick=()=>{if(ed)t.classList.toggle('off');};_tar.insertBefore(t,_tar.querySelector('.addin'));save();};openM();setTimeout(()=>document.getElementById('tagl')?.focus(),60);}
+function openAddPlat(btn){if(!ed)return;_tar=btn.closest('.plats');document.getElementById('mtitle').textContent='ADD PLATFORM';document.getElementById('mbody').innerHTML=`<div class="mf"><div class="ml">Label</div><input class="mi" id="pl" placeholder="e.g. YOUTUBE LIVE" /></div><div class="mf"><div class="ml">Style</div><select class="ms" id="pc"><option value="pb-ig">INSTAGRAM</option><option value="pb-tk">TIKTOK</option><option value="pb-yt">YOUTUBE</option><option value="pb-web">WEBSITE</option><option value="pb-live">LIVE</option><option value="pb-other">OTHER</option></select></div>`;cb=()=>{const l=document.getElementById('pl').value.trim();const c=document.getElementById('pc').value;if(!l)return;const b=document.createElement('button');b.className=`pb ${c}`;b.textContent=l;b.onclick=()=>{if(ed)b.classList.toggle('off');};_tar.insertBefore(b,_tar.querySelector('.addin'));save();};openM();setTimeout(()=>document.getElementById('pl')?.focus(),60);}
+function openWiz(ph){newPh=ph;document.getElementById('mtitle').textContent='NEW CARD';document.getElementById('mbody').innerHTML=`<div class="mrow"><div class="mf"><div class="ml">Card ID</div><input class="mi" id="wn" placeholder="e.g. C-15" /></div><div class="mf"><div class="ml">Duration</div><input class="mi" id="wd" placeholder="e.g. 60 SEC" /></div></div><div class="mf"><div class="ml">Title</div><input class="mi" id="wt" placeholder="e.g. FINAL TRAILER" /></div><div class="mrow"><div class="mf"><div class="ml">Pillar</div><input class="mi" id="wp" placeholder="e.g. 🎬 FRESH" /></div><div class="mf"><div class="ml">Color</div><select class="ms" id="wpc"><option value="#c9a84c">Gold (Archive)</option><option value="#4a90d9">Blue (PR)</option><option value="#e63312">Red (Fresh/Final)</option><option value="#27ae60">Green (Trials)</option><option value="#9b59b6">Purple (Road)</option><option value="#888">Grey (Setup)</option></select></div></div><div class="mf"><div class="ml">Description</div><input class="mi" id="wde" placeholder="Short description..." /></div><div class="mf"><div class="ml">Platforms</div><div class="picker">${[{c:'pb-ig',l:'IG REEL'},{c:'pb-tk',l:'TIKTOK'},{c:'pb-yt',l:'YT SHORTS'},{c:'pb-yt',l:'YT FULL'},{c:'pb-web',l:'WEBSITE'},{c:'pb-live',l:'LIVE YT'},{c:'pb-ig',l:'IG STORIES'},{c:'pb-ig',l:'IG CAROUSEL'}].map((p,i)=>`<span class="chip ${p.c}" data-c="${p.c}" data-l="${p.l}" onclick="this.classList.toggle('sel')">${p.l}</span>`).join('')}</div></div><div class="mf"><div class="ml">Format</div><div class="picker">${[{c:'tag-v',l:'📱 9:16'},{c:'tag-h',l:'🖥️ 16:9'},{c:'tag-l',l:'🔁 LOOP'},{c:'tag-s',l:'🃏 1:1'}].map(f=>`<span class="chip tag ${f.c}" data-c="${f.c}" data-l="${f.l}" onclick="this.classList.toggle('sel')">${f.l}</span>`).join('')}</div></div>`;cb=()=>{const num=document.getElementById('wn').value.trim()||'C-NEW';const ttl=document.getElementById('wt').value.trim()||'NEW CARD';const pil=document.getElementById('wp').value.trim()||'';const pc=document.getElementById('wpc').value;const dur=document.getElementById('wd').value.trim();const desc=document.getElementById('wde').value.trim()||'';const plats=Array.from(document.querySelectorAll('.chip.sel[data-c^="pb"]')).map(el=>({c:el.dataset.c,l:el.dataset.l,on:1}));const fmts=Array.from(document.querySelectorAll('.chip.sel[data-c^="tag"]')).map(el=>({c:el.dataset.c,l:el.dataset.l,on:1}));const nc={id:'card_'+Date.now(),num,title:ttl,pillar:pil,pc,dur:dur?[{v:dur,l:''}]:[],desc,plats,fmts,stats:[]};if(!cards[newPh])cards[newPh]=[];cards[newPh].push(nc);render();save();toast('ADDED');};openM();setTimeout(()=>document.getElementById('wn')?.focus(),60);}
+function openM(){document.getElementById('over').classList.add('open');}
+function closeModal(){document.getElementById('over').classList.remove('open');cb=null;}
+function confirmModal(){if(cb)cb();closeModal();}
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('over').addEventListener('click',e=>{if(e.target===document.getElementById('over'))closeModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(e.key==='Enter'&&document.getElementById('over').classList.contains('open')){const a=document.activeElement;if(a&&a.tagName!=='TEXTAREA'){e.preventDefault();confirmModal();}}});load();render();});
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
+</script>
+</body>
+</html>
